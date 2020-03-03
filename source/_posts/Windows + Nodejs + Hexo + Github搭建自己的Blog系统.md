@@ -22,6 +22,8 @@ tags:
 1. 访问Nodejs官方网站：https://nodejs.org/en/download/ ,下载最新的Nodejs安装包。
 2. 运行下载好的安装包，默认下一步安装即可。
 
+<!--more-->
+
 ## 安装Git
 
 1. 访问Git官方网站：https://git-scm.com/downloads/ ,下载最新的Git安装包。

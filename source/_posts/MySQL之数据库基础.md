@@ -1,6 +1,6 @@
 ---
 title: MySQL之数据库基础
-date: 2019-08-04
+date: 2019-11-04
 tags: 
 - MySQL
 categories: 
@@ -11,6 +11,8 @@ MySQL是目前最为流行的开源数据库，是完全网络化的跨平台关
 由MySQL AB公司开发，已从1995年至今，其象征符号是一只小海豚。
 如今已被Oracle收购，其创始人从现有MySQL程序代码中，开发出了另一个分支版本，名为MariaDB。
 官网地址：https://www.mysql.com/
+
+<!--more-->
 
 ## 特点
 

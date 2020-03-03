@@ -1,6 +1,6 @@
 ---
 phptitle: PHP之自动类型转换
-date: 2019-08-01
+date: 2019-08-015
 tags: 
 - PHP
 categories: 
@@ -28,6 +28,8 @@ categories:
    	bool_value(0);    
    	bool_value(1);?>
    ```
+
+<!--more-->
 
 2. 浮点型0.0为假，小数点后有一个非零的数值即为真。
 

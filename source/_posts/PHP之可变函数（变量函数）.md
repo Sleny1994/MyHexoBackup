@@ -1,6 +1,6 @@
 ---
 title: PHP之可变函数（变量函数）
-date: 2019-08-01
+date: 2019-09-07
 tags: 
 - PHP
 categories: 
@@ -16,6 +16,8 @@ categories:
 可变函数不能用于例如`echo`,`print`,`unset()`,`isset()`,`empty()`,`include`,`require`以及类似的语言结构，需要使用自己的包装函数来将这些结构用作可变函数。
 
 ## 示例一：可变函数调用
+
+<!--more-->
 
 ```php
 <?php
