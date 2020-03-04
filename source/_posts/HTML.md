@@ -7,8 +7,12 @@ categories:
 ---
 
 ## 规范
+- 必须以如下代码开头 
+```HTML
+<!doctype html>
+```
 
-- 开头必须以 <!doctype html>
+<!--more-->
 
 ## 标签
 ```html

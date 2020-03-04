@@ -19,6 +19,8 @@ categories:
 - 变量的定义使用var关键字，分号";"结尾
 - 变量区分大小写
 
+<!--more-->
+
 ## DOM操作
 - DOM(Document Object Model)
 - document.getElementById("id属性的值"); 通过id的值获取元素，返回值为id所在的HTML代码
