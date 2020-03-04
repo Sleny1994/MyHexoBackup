@@ -26,7 +26,15 @@ categories:
 - document.getElementsByName("name属性的值"); 通过name属性的值获取元素
 - document.getElementsByClassName("类的名字"); 通过类的名字获取元素，返回值为一个集合
 - document.querySelector("选择器"); 获取单个选择器所在的HTML代码
-- document.querySelectorAll("选择器"); 获取多个选择器返回一个集合 
+- document.querySelectorAll("选择器"); 获取多个选择器返回一个集合
+```JavaScript
+var wrap = document.querySelector(".wrap");
+wrap.onclick = function(){
+	wrap.style.cssText = "width:500px; height:800px; background-color:red;")	
+}
+wrap.onmousemove = function(){} //鼠标滑动时出现效果
+wrap.onkeydown = function(){} //键盘按压时出现效果
+``` 
 
 ## 输出数据
 - document.write("xxx")
@@ -100,5 +108,17 @@ box.getComputedStyle(box,null)["样式名"]
 ```
 - 外部样式（外部的css文件），与内嵌相同
 
-
-
+## 浏览器事件
+- BOM（Browser Object Model）
+- onload,onerror,onresize
+```JavaScript
+window.onload = function(){
+	console.log("页面已经加载完毕")
+}
+window.onreize = function(){
+	console.log("页面窗口发生变化")
+}
+window.onscrool = function(){
+	console.log("页面滚动条发生变化")
+}
+```
