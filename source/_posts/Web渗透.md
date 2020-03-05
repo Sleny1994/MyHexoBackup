@@ -1,3 +1,10 @@
+---
+title: Web渗透
+date: 2020-03-05
+tags: 
+- Security
+---
+
 # 信息收集
 
 ## 域名信息收集
@@ -14,6 +21,8 @@
 - 证书透明度公开日志枚举：
 	- https://crt.sh/
 	- http://censys.io/
+
+<!--more-->
 
 ## 站点信息收集
 
@@ -233,4 +242,11 @@ python2 sqlmap.py -r target.txt -p passwd --technique E
 
 - 浏览器console控制台输入document.cookie可以获取当前页面的cookie值
 - sqlmap工具：sqlmap -r target.txt --level 3，并在target.txt内需要注入的地方使用*标记
-- 
+
+#### base64
+
+- 基于64个可打印字符来表示二进制数据的方法，常见的传输8Bit字节码的编码方式之一
+- ①将3个字符变成4个字符②每76个字符加一个换行符③最后的结束符也需要处理，一般为==
+- base64_encode(str)加密，base64_decode(str)解密函数
+- " or 1 = 1 # 将其转化为Base64进行注入测试
+- sqlmap工具：sqlmap -r target.txt --level 3 --batch --tamper base64encode.py //需要添加base64encode否则注入会失败
