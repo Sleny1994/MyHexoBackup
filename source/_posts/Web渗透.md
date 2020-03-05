@@ -69,7 +69,92 @@
 - site:github.com svn
 - site:github.com ftp ftppassword
 
+## 真实IP收集
 
+### CDN
+- Content Delivery Network，内容分发网络
+- 通过Ping判断是否存在CND
+- http://ping.chinaz.com
 
+### 绕过CDN
+- 内部邮箱源，收集内部邮箱服务器IP地址
+- 网站phpinfo.php文件
+- 查询子域名，子域名可能未使用CDN
+- 使用国外服务器访问 https://asm.ca.com/en/ping.php
+- 查询域名解析记录 https://viewdns.info/
 
+### 验证IP地址
+- 直接使用IP访问，如若IP为真实地址，则可以正常访问，反之无法正常访问
 
+## Shodan工具
+- 信息收集主要针对于目标的服务器系统、数据库系统、中间件系统、应用程序系统、中间件、边界设备等，甚至还包括系统管理员的信息
+- 该工具索引所有和互联网关联的服务器、摄像头、打印机、路由器等
+- www.shodan.io
+
+### 基本使用方法
+- 搜索Webcam，直接搜索框中输入webcam
+- 搜索指定端口，关键字port指定具体端口号
+- 搜索指定IP，关键字host指定具体IP地址
+- 搜索具体城市，关键字city指定具体城市
+
+### 命令行使用
+- easy_install shodan      //安装
+- shodan init [key]        //初始化
+- shodan count [server]    //查询对应服务使用的数量
+- shodan search [key_word] //关键字搜索
+- shodan host [ip]         //根据IP查询指定地址相关信息
+- shodan info              //查看自身账户信息
+- shodan myip              //查看自身外部IP信息
+- shodan honeyscore [ip]   //查看是否存在蜜罐
+
+### Python-shodan
+```Python
+import shodan
+SHODAN_API_KEY = ""
+api = shodan.Shodan(SHODAN_API_KEY)
+result = api.search('key_word')
+print(result['total'])
+
+result = api.host('ip')
+print(result['country_name'])
+```
+- https://developer.shodan.io/api
+
+## Git信息泄露
+- https://git-scm.com
+
+### 原理
+- 解析.git/index文件，找到工程中所有的：（文件名，文件sha1）
+- 去.git/objects文件夹下下载对应的文件
+- zlib解压文件，按原始的目录结构写入源代码
+- 审计源代码，挖掘其中的漏洞
+
+### 利用
+- 下载git clone https://github.com/lijiejie/GitHack.git
+- python GitHack.py [site]/.git/
+
+## SQL注入
+
+### 原理
+- 在解释型语言中，如果程序与用户进行交互，用户就可以构造特殊的输入来拼接到程序中执行，从而使得程序依据用户输入执行有可能存在恶意行为的代码
+- 万能密码：[' or 1=1 -- ]
+- MySQL5.0以上版本，为方便管理数据库默认定义了information_schema数据库，用来存储数据库元信息，其中具有表schemata（数据库名）、tables（表名）、columns（列名/字段名）
+- 在schemata表中，schema_name字段用于存储数据库名
+- 在tables表中，table_schema和table_name分别用于存储数据库名和表名
+- 在columns表中，column_name（字段名）
+- SELECT * FROM table_name where username = '';
+- INSERT INTO table_name (key1, key2) values (1, 2);
+- UPDATE table_name SET password = '' where username = 'zhangsan';
+- DELETE FROM table_name where username = 'lisi';
+- MySQL常用的聚合函数：user()、database()、version()
+
+### CMS SQL注入
+- 单引号 '
+- and 1=1
+- and 1=2 
+- 如果页面报SQL错误，则代表有可能存在注入漏洞
+
+### SQLmap工具
+- 登录注入需要抓取提交的数据包，可以借用burpsuite抓取后复制保存至本地文件test.txt
+- sqlmap -r test.txt -p username --dbs
+- sqlmap -u "http://..." --dbs / -D 指定数据库 -T 指定表 -C 输出所有字段
