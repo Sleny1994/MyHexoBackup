@@ -3,6 +3,8 @@ title: Web渗透
 date: 2020-03-05
 tags: 
 - Security
+categories:
+- Security
 ---
 
 # 信息收集
