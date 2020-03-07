@@ -100,3 +100,62 @@ int void();
 ### 宏替换
 
 - #define add(v1, v2) v1 + v2
+
+### const
+
+- 被它修饰的变量将无法修改
+- 在结构体内同样生效
+- 指针也同样
+```C++
+#include <iostream>
+using namespace std;
+    
+struct Date{
+    int year;
+    int month;
+    int day;
+}
+
+int main(){
+    Date d1 = {2001, 1, 2};
+    Date d2 = {2002, 3, 5};
+    Date *p = &d1;
+    p -> year = 2003;
+    (*p).month = 5;
+    *p = d2
+    count << d1.year << endl;
+}
+```
+- const修饰的是其右边的代码
+```C++
+#include <iostream>
+using namespace std;
+
+int main(){
+    int age = 1;
+    int weight = 2;
+    
+    const int *p1 = &age;
+    int const *p2 = &age;
+    int * const p3 = &age;
+    // 此时p3是常量，*p3不是，则p3无法重新赋值
+    // p3 = &weight; 这是将weight的地址赋值给了p3,而此时*p3 = 3则是 weight = 3
+    const int * const p4 = &age;
+    int const * const p5 = &age;
+}
+```
+
+### 引用
+
+```C++
+int age = 10;
+int &refAge = age;
+refAge = 20;
+```
+- 类似于上述的代码就是引用，可以起到与指针类似的功能
+- 引用相当于是给变量起了一个别名
+- 对引用做计算，就是对变量做计算
+- 在定义时就必须初始化，一旦指向了某个变量，就不可以再改变了
+- 可以利用引用初始化另一个引用，相当于某个变量有多个别名
+- 比指针更安全，函数返回值可以被赋值
+- 引用的本质就是指针，但编译器削弱了它的功能，即引用就是弱化的指针，从底层汇编代码来看其执行完全一样
