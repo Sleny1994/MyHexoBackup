@@ -2,9 +2,9 @@
 title: C++学习笔记
 date: 2020-03-06
 tags:
-- C/C++
+- C++
 categories:
-- C/C++
+- C
 ---
 
 ## 基础语法
