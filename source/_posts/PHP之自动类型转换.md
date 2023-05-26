@@ -1,5 +1,5 @@
 ---
-phptitle: PHP之自动类型转换
+title: PHP之自动类型转换
 date: 2019-08-015
 tags: 
 - PHP
