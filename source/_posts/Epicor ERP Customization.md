@@ -126,3 +126,14 @@ Select Tools > Toolbox <br>
 8. 根据需求设置对应的样式
 
 ## Customization Form Wizards
+待完善
+
+## Example Codes
+```c#
+// 在客户化界面获取当前菜单的Menu ID
+txtMenuID.Text = ((EpiDataView)oTrans.EpiDataViews[“CallContextClientData”]).dataView.Table.Rows[0][“ProcessID”].ToString();
+
+// convert time from string to time
+// Epicor标准数据库中内置了一个转换函数ice.StringTime
+select Ice.StringTime(SysTime,'00:00:00') as TranTime from Erp.PartTran
+```
