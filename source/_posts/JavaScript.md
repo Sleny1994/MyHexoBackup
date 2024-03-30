@@ -1,7 +1,9 @@
 ---
 title: JavaScript基础知识
+date: 2023-12-15
 tags:
 - JavaScript
+- jQuery
 categories:
 - JavaScript
 ---
@@ -85,6 +87,82 @@ function(){
 - 形参/实参
 - return // 一般函数执行后返回undefined -> 未定义
 - arguments //可以用于获取参数的值
+### 实用函数
+1. 在页面内点击按钮即可插入<input>输入框输入数据
+```js
+// 可以使用本地jquery，也可以采用cdn环境，确保src路径正确即可
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+function CreateInput(){
+	var inputList = document.getElementById("inputList");
+	var inputCount = inputList.getElementsByTagName('input').length;
+	var newInput = `<form id="myForm">
+						<div class="form-group">
+							<th>
+								<input class="form-control" id="inputText" name="inputText[${inputCount}]" type="text">
+							</th>
+							<th>
+								<input class="form-control" id="inputDate" name="inputDate[${inputCount}]" type="date"> 
+							</th>
+							<th>
+								<input class="form-check-input" id="inputCheck" name="inputCheck[${inputCount}]" type="checkbox">
+							</th>
+							<th>
+								<button class="btn btn-success" id="button" name="btn_add" onclick="Add()">添加</button>
+							</th>
+						</div>
+					</form>
+					<br/>`;
+	var element = document.createElement("thead");
+	element.innerHTML = newInput;
+	inputList.appendChild(element);
+}
+```
+2. 通过xhr或者ajax对数据进行Post方法操作
+```js
+function Add(){
+	var dataText = document.getElementById("inputText").value;
+	var dataTime = document.getElementById("inputDate").value;
+	var dataCheck = document.getElementById("inputCheck").checked;
+	// 使用JSON格式进行数据传递
+	var data = JSON.stringify({
+		Item:dataText,
+		CreateTime:dataTime,
+		IsDone:dataCheck
+	});
+
+	// 方法一：
+	var xhr = new XMLHttpRequest;
+	xhr.open("POST","/Home/Create",true);  // POST所对应的后端Action的路由url
+	xhr.setRequestHeader("Content-type","application/json");
+	xhr.send(data);
+	
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			// readyState有5种状态：
+			//   0 - ajax开始初始化
+			//   1 - 开始发送ajax请求
+			//   2 - ajax请求发送完成
+			//   3 - 开始解析响应的资源
+			//   4 - ajax请求的步骤全部完成
+			//var s = xhr.responseText;
+			//document.getElementById("result").innerHTML = JSON.parse(s).result;
+			window.location.reload();  // 需要加上window，否则不会刷新页面
+			}
+	}
+	
+	// 方法二：
+	$.ajax({
+	   url:"/Home/Create",
+	   data:data,
+	   contentType:"application/json",
+	   type:"post",
+	   cache:false,
+	   datatype:"json",
+	   success:function(data){alert("添加成功");location.reload()}, // ajax中使用location.reload()即可刷新页面
+	   error:function(){alert("添加失败");}
+	})
+}
+```
 
 ## 操作元素的自有属性
 ```JavaScript
@@ -123,4 +201,37 @@ window.onreize = function(){
 window.onscrool = function(){
 	console.log("页面滚动条发生变化")
 }
+```
+
+## 注意
+1. 若从页面中获取了日期文本，需要注意格式是否与后端相匹配，如不匹配需要对文本进行格式化处理
+```js
+// 页面内获取的日期格式为：2023/12/15
+// 后端内的日期格式为：2023-12-15
+// 前后端不一致在.net core web mvc环境下会导致报错：视图页面不存在的错误
+// 可以采用split分割后再使用join进行拼接处理
+var date = document.getElementById('id').innerText.toString().split("/").join("-");
+```
+2. 获取元素所对应的值
+```js
+$('button[name=edit]').click(function(e)
+{
+	var x = $(e.target).attr("id");
+	Edit(this,x);
+})
+```
+3. 修改<input>输入框的内容，将不可编辑变成可编辑
+```js
+$('.input_1').each(function()
+{
+	// 未修改前的文本内容 
+	var old_value = $(this).html().trim(" "); 
+	$(this).html("<input type='text' name=" + inputName + " class='form-control' value=" + old_value + " >");
+})
+
+// 获取修改后的文本内容
+$('input[name='input']').each(function()
+{ 	
+	var new_value = $(this).parent('td').parent('tr').children().find('input').val(); 
+})
 ```

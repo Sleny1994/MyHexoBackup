@@ -5,9 +5,12 @@ tags:
 - CSharp
 - NET
 - SQL
+- EF
 categories:
 - CSharp
 ---
+
+[*注：本文以Code First为例*]
 
 ## 安装
 从NuGet包管理器内搜索EF进行安装，涉及两个包`Microsoft.EntityFrameworkCore` | `Microsoft.EntityFrameworkCore.SqlServer`
@@ -114,3 +117,47 @@ Add-Migration InitialCreate
 Update-Database
 ```
 注：需要安装Microsoft.EntityFrameworkCore.Tools软件包
+
+## 常见数据库
+<table>
+    <tr>
+        <th> SQL </th>
+        <th> Demo </th>
+        <th> Package </th>
+    </tr>
+    <tr>
+        <th> SQL Server | Azure SQL </th>
+        <th> .UseSqlServer(connectionString) </th>
+        <th> Microsoft.EntityFrameworkCore.SqlServer </th>
+    </tr>
+    <tr>
+        <th> Azure Cosmos DB </th>
+        <th> .UseCosmos(connectionString, DatabaseName) </th>
+        <th> Microsoft.EntityFrameworkCore.Cosmos </th>
+    </tr>
+    <tr>
+        <th> SQLite </th>
+        <th> .UseSqlite(connectionString) </th>
+        <th> Microsoft.EntityFrameworkCore.Sqlite </th>
+    </tr>
+    <tr>
+        <th> EF Core In Memory DB </th>
+        <th> .UseInMemoryDatabase(databaseName) </th>
+        <th> Microsoft.EntityFrameworkCore.InMemory </th>
+    </tr>
+    <tr>
+        <th> PostgreSQL </th>
+        <th> .UseNpgsql(connectionString) </th>
+        <th> Microsoft.EntityFrameworkCore.PostgreSQL </th>
+    </tr>
+    <tr>
+        <th> MySQL | MariaDB </th>
+        <th> .UseMySql(connectionString) </th>
+        <th> Microsoft.EntityFrameworkCore.MySql </th>
+    </tr>
+    <tr>
+        <th> Oracle </th>
+        <th> .UseOracle(connectionString) </th>
+        <th> Oracle.EntityFrameworkCore </th>
+    </tr>
+</table>

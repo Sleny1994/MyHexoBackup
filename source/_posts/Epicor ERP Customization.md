@@ -136,4 +136,37 @@ txtMenuID.Text = ((EpiDataView)oTrans.EpiDataViews[“CallContextClientData”])
 // convert time from string to time
 // Epicor标准数据库中内置了一个转换函数ice.StringTime
 select Ice.StringTime(SysTime,'00:00:00') as TranTime from Erp.PartTran
+
+// Get the currentUserID and currentUserName on SSRS.
+// define parameters
+private static string currentUserID = "";
+private static string currentUserName = "";
+// Get info from current session.
+Ice.Core.Session ss = (Ice.Core.Session)ReceiptEntryForm.Session;
+currentUserID = ss.UserID.ToString();
+currentUserName = ss.UserName;
+// At the ReportViewer Code add parameters
+ReportViewer reportViewer = new ReportViewer();
+ReportDataSource item = new ReportDataSource("BAQReportResult", dt);
+reportViewer.LocalReport.ReportPath = ssrsUrl;
+reportViewer.LocalReport.EnableExternalImages = true;
+reportViewer.LocalReport.DataSources.Clear();
+reportViewer.LocalReport.DataSources.Add(new ReportDataSource("BAQReportResult", dt));
+reportViewer.LocalReport.DataSources.Add(item);
+List<ReportParameter> parameters = new List<ReportParameter>();
+parameters.Add(new ReportParameter("UserName",currentUserName));
+reportViewer.LocalReport.SetParameters(parameters);
+string environmentVariable = Environment.GetEnvironmentVariable("TEMP");
+DirectoryInfo directoryInfo = new DirectoryInfo(environmentVariable);
+string text = directoryInfo.FullName + "\\" + DateTime.Now.ToString("yyMMddHHmmss") + ".pdf";
+string text2;
+string text3;
+string text4;
+string[] array2;
+Warning[] array3;
+byte[] array = reportViewer.LocalReport.Render("PDF", null, out text2, out text3, out text4, out array2, out array3);
+FileStream fileStream = new FileStream(text, FileMode.Create);
+fileStream.Write(array, 0, array.Length);
+fileStream.Close();
+Process.Start(text);
 ```
